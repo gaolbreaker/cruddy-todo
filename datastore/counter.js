@@ -39,8 +39,24 @@ const writeCounter = (count, callback) => {
 // Public API - Fix this function //////////////////////////////////////////////
 
 exports.getNextUniqueId = () => {
-  counter = counter + 1;
+
+  // Read from the file using the helper function readCounter()
+  readCounter((error, data) => { counter = data; });
+  //test
+  // console.log(counter);
+  // Increment the counter in memory
+  counter++;
+  //test
+  // console.log(counter);
+  // Write the incremented counter to non-volatile memory
+  writeCounter(counter, (error, data) => console.log(data));
+  // return zeroPadded version of incremented counter value
   return zeroPaddedNumber(counter);
+
+  // original code
+  // counter = counter + 1;
+  // return zeroPadded version of incremented counter value
+  // return zeroPaddedNumber(counter);
 };
 
 
