@@ -39,7 +39,7 @@ const writeCounter = (count, callback) => {
 // Public API - Fix this function //////////////////////////////////////////////
 
 exports.getNextUniqueId = () => {
-
+  console.log(__dirname);
   // Read from the file using the helper function readCounter()
   readCounter((error, data) => { counter = data; });
   //test

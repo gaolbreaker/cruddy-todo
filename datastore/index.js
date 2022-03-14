@@ -9,8 +9,18 @@ var items = {};
 
 exports.create = (text, callback) => {
   var id = counter.getNextUniqueId();
-  items[id] = text;
-  callback(null, { id, text });
+  //items[id] = text;
+  //create text file that is labeled with with id and we are going to write in text as its content
+  //if there is an error we throw creating error
+  //use same callback as what was here previously
+  fs.writeFile(path.join(exports.dataDir, `${id}.txt`), text, (err) => {
+    if (err) {
+      throw ('error creating record');
+    } else {
+      callback(null, { id, text });
+    }
+  });
+  //callback(null, { id, text });
 };
 
 exports.readAll = (callback) => {
