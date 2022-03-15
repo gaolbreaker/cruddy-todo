@@ -37,27 +37,55 @@ const writeCounter = (count, callback) => {
 };
 
 // Public API - Fix this function //////////////////////////////////////////////
-
-exports.getNextUniqueId = () => {
-  console.log(__dirname);
-  // Read from the file using the helper function readCounter()
-  readCounter((error, data) => { counter = data; });
-  //test
-  // console.log(counter);
-  // Increment the counter in memory
-  counter++;
-  //test
-  // console.log(counter);
-  // Write the incremented counter to non-volatile memory
-  writeCounter(counter, (error, data) => console.log(data));
-  // return zeroPadded version of incremented counter value
-  return zeroPaddedNumber(counter);
-
-  // original code
-  // counter = counter + 1;
-  // return zeroPadded version of incremented counter value
-  // return zeroPaddedNumber(counter);
+exports.getNextUniqueId = (callback) => {
+  readCounter((err, data) => {
+    if (err) {
+      throw ('error getting unique ID');
+    } else {
+      counter = data;
+      counter++;
+      writeCounter(counter, (error, data) => {
+        callback(null, zeroPaddedNumber(counter));
+      });
+    }
+  });
 };
+// exports.getNextUniqueId = () => {
+//   readCounter((err, data) => {
+//     if (err) {
+//       throw ('Not getting count of unique ID');
+//     } else {
+//       counter = data;
+//       counter++;
+//       return writeCounter(counter, (err, data) => {
+//         if (err) {
+//           throw ('Not writing counter');
+//         } else {
+//           return zeroPaddedNumber(counter);
+//         }
+
+//       });
+//     }
+//   });
+//   return (zeroPaddedNumber(counter));
+//   // console.log(__dirname);
+//   // // Read from the file using the helper function readCounter()
+//   // readCounter((error, data) => { counter = data; });
+//   // //test
+//   // // console.log(counter);
+//   // // Increment the counter in memory
+//   // counter++;
+//   // //test
+//   // // console.log(counter);
+//   // // Write the incremented counter to non-volatile memory
+//   // writeCounter(counter, (error, data) => console.log(data));
+//   // // return zeroPadded version of incremented counter value
+
+//   // original code
+//   // counter = counter + 1;
+//   // return zeroPadded version of incremented counter value
+//   // return zeroPaddedNumber(counter);
+// };
 
 
 
